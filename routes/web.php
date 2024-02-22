@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -102,4 +105,33 @@ Route::get('/trueProfile', function () {
 //    Route::get('/post', [PostController::class, 'index']);
 //    Route::get('/event', [EventController::class, 'index']);
 //});
+
+/**
+ * Redirect Routing
+ */
+Route::redirect('/here', '/there');
+
+/**
+ * View Routing
+ */
+Route::view('/welcome', 'welcome');
+Route::view('/welcome', 'welcome', ['name' => 'Taylor']);
+
+//Routing with Controller
+
+Route::get('/hello', [WelcomeController::class, 'hello']);
+
+//Routing For modified Practicum point 2
+
+Route::get('/', [PageController::class, 'index']);
+Route::get('/about', [PageController::class, 'about']);
+Route::get('/articles/{id}', [PageController::class, 'articles']);
+
+//Resource Controller
+
+Route::resource('photos', PhotoController::class);
+
+Route::resource('photos', PhotoController::class)->only(['index', 'show']);
+
+Route::resource('photos', PhotoController::class)->except(['create', 'store', 'update', 'destroy']);
 
